@@ -6,13 +6,15 @@ import customTheme from "./theme";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import AppTokens from './AppTokens';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ChakraProvider theme={customTheme}>
       <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
-      <App />
+      {/* <App /> */}
+      <AppTokens />
     </ChakraProvider>
   </React.StrictMode>
 );

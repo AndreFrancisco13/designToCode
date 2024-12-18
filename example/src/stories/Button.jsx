@@ -1,38 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button as ChakraButton } from "@chakra-ui/react";
 
-/** Primary UI component for user interaction */
-export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
-  const mode = primary ? 'primary' : 'secondary';
+// Tokens
+import tokens from '../design-system/tokens.json';
+
+const Button = ({ label, size, variant, onClick, disabled}) => {
+  const styles = {
+    backgroundColor: tokens.colors[variant] || tokens.colors.primary,
+    color: variant === 'light' ? tokens.colors.dark : tokens.colors.light,
+    fontSize: tokens.fontSizes[size] || tokens.fontSizes.medium,
+    padding: tokens.spacing.small,
+    borderRadius: tokens.borderRadius.medium,
+    border: 'none',
+    cursor: disabled ? 'not-allowed' : 'pointer',
+    opacity: disabled ? 0.6 : 1,
+  };
+
   return (
-    <ChakraButton
-      bg={backgroundColor}
-      size={size}
-      variant={mode}
-      {...props}
-    >
+    <button style={styles} onClick={onClick} disabled={disabled}>
       {label}
-    </ChakraButton>
+    </button>
   );
 };
 
+// Definir os tipos de propriedade e valores padrão
 Button.propTypes = {
-  /** Is this the principal call to action on the page? */
-  primary: PropTypes.bool,
-  /** What background color to use */
-  backgroundColor: PropTypes.string,
-  /** How large should the button be? */
-  size: PropTypes.oneOf(['sm', 'md', 'lg']),
-  /** Button contents */
   label: PropTypes.string.isRequired,
-  /** Optional click handler */
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  variant: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
-  backgroundColor: null,
-  primary: false,
-  size: 'md',
-  onClick: undefined,
+  size: 'medium',
+  variant: 'primary',
+  onClick: () => {},
+  disabled: false,
 };
+
+export default Button;
